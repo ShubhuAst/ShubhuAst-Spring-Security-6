@@ -26,7 +26,7 @@ public class PersonController {
     final PasswordEncoder passwordEncoder;
 
     @PostMapping("/save")
-    public String savePerson(@RequestBody PersonSaveCO personSaveCO) {
+    public String savePerson(@RequestBody @Valid PersonSaveCO personSaveCO) {
         Optional<Person> optionalPerson = personRepo.findByEmail(personSaveCO.getEmail());
         if (!optionalPerson.isEmpty())
             return "Already Exist";
