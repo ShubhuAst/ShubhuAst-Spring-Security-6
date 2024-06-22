@@ -8,10 +8,12 @@ import com.example.spring.security.saveCO.PersonUpdateCO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -47,6 +49,12 @@ public class PersonController {
         if (!person.isPresent())
             return null;
         return person.get();
+    }
+
+    @GetMapping("/get/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<Person> getAllPerson() {
+        return personRepo.findAll();
     }
 
     @PutMapping("/update")
